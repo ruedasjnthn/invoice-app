@@ -5,7 +5,8 @@
     </a>
 
     <!-- Settings Dropdown -->
-    <div class="flex items-center px-6 md:px-8 xl:py-6 xl:px-0 xl:justify-center border-l border-[#494E6E] xl:border-l-0 xl:border-t">
+    <div
+        class="flex items-center px-6 md:px-8 xl:py-6 xl:px-0 xl:justify-center border-l border-[#494E6E] xl:border-l-0 xl:border-t">
         <x-dropdown align="left">
             <x-slot name="trigger">
                 <button>

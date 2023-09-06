@@ -10,7 +10,9 @@ class InvoiceController extends Controller
     public function index()
     {
         // Retrieve a list of all invoices
-        $invoices = Invoice::all();
+        $user = auth()->user();
+        
+        $invoices = Invoice::where('user_id', $user->id)->get();
 
         // Pass the invoices data to the view
         return view('invoice.index', compact('invoices'));
@@ -18,30 +20,8 @@ class InvoiceController extends Controller
 
     public function create(Request $request)
     {
-        // Validate the request data
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'client_name' => 'required|string',
-            'client_email' => 'required|email',
-            'client_street_address' => 'required|string',
-            'client_city' => 'required|string',
-            'client_postal_code' => 'required|string',
-            'client_country' => 'required|string',
-            'street_address' => 'required|string',
-            'city' => 'required|string',
-            'postal_code' => 'required|string',
-            'country' => 'required|string',
-            'invoice_date' => 'required|date',
-            'payment_terms' => 'required|string',
-            'project_description' => 'required|string',
-            'item_list' => 'required|json',
-            'status' => 'required|string',
-        ]);
-        // Create a new invoice
-        $invoice = new Invoice($request->all());
-        $invoice->save();
-
-         return redirect()->route('invoice.index')->with('success', 'Invoice created successfully.');
+        $user = auth()->user();
+        return view('invoice.create', compact('user'));
     }
 
     public function show($id)
@@ -78,7 +58,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-        $request->validate([
+       $request->validate([
             'user_id' => 'required|exists:users,id',
             'client_name' => 'required|string',
             'client_email' => 'required|email',
@@ -102,6 +82,6 @@ class InvoiceController extends Controller
         $invoice->save();
 
         // Redirect to a success page or the invoice detail page
-        return redirect()->route('invoice.index')->with('success', 'Invoice created successfully');
+        return Redirect()->route('invoice.index')->with('success', "user successfully created");
     }
 }
